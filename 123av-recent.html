@@ -4,29 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer">
-    <title>최근 업데이트 Top 10</title>
+    <title>최근 업데이트 Top 10 (실시간)</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background: #0f0f0f; color: #eee; margin: 0; padding: 20px; }
-        h1 { text-align: center; color: #ff4081; font-size: 2.4em; }
+        h1 { text-align: center; color: #ff4081; font-size: 2.4em; margin-bottom: 5px; }
         .subtitle { text-align: center; color: #aaa; margin-bottom: 30px; }
         table { width: 100%; max-width: 1450px; margin: 0 auto; border-collapse: collapse; background: #1e1e1e; box-shadow: 0 4px 25px rgba(0,0,0,0.7); }
         th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #333; vertical-align: middle; }
         th { background: #2a2a2a; color: #ff4081; }
         
-        /* 이미지 스타일 수정 (고정 크기 제공 및 효과) */
-        .cover-img {
-            width: 140px;
-            height: auto;
-            border-radius: 6px;
-            border: 1px solid #444;
-            transition: all 0.3s;
-            display: block;
+        /* 로딩 애니메이션 */
+        .loading { text-align: center; font-size: 1.2em; color: #ff4081; padding: 40px; }
+        
+        .img-container {
+            position: relative; width: 140px; height: 190px; background: #222; 
+            border-radius: 6px; border: 1px solid #444; overflow: hidden; 
+            display: flex; align-items: center; justify-content: center; 
+            text-align: center; font-size: 11px; color: #777; transition: all 0.3s;
         }
-        .cover-img:hover {
-            transform: scale(1.05);
-            border-color: #ff4081;
-            box-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
-        }
+        .img-container:hover { transform: scale(1.05); border-color: #ff4081; }
+        .cover-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; background: #222; }
         
         tr:hover { background: #2f2f2f; }
         .code { font-weight: bold; color: #4fc3f7; }
@@ -34,8 +31,9 @@
     </style>
 </head>
 <body>
+
     <h1>🔥 최근 업데이트 Top 10</h1>
-    <p class="subtitle">123AV 실시간 데이터</p>
+    <p class="subtitle">123AV 실시간 크롤링 데이터</p>
     
     <table>
         <thead>
@@ -48,134 +46,94 @@
                 <th>주요 내용</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="content-list">
             <tr>
-                <td>1</td>
-                <td class="code">CAND-01225</td>
-                <td>Sunny Day, Then Fetish / Mariko Uchida</td>
-                <td>01:59:15</td>
-                <td>
-                    <a href="https://123av.com/en/v/cand-01225" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481498/preview.jpg" alt="CAND-01225">
-                    </a>
-                </td>
-                <td>Mariko Uchida 페티시 플레이</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td class="code">PPF-001B</td>
-                <td>impact / Marina Asakura (Blu-ray)</td>
-                <td>02:13:08</td>
-                <td>
-                    <a href="https://123av.com/en/v/ppf-001b" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481493/preview.jpg" alt="PPF-001B">
-                    </a>
-                </td>
-                <td>Marina Asakura Blu-ray</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td class="code">326FCT-223</td>
-                <td>[Full Face Reveal] Yuzu-chan</td>
-                <td>01:40:08</td>
-                <td>
-                    <a href="https://123av.com/en/v/326fct-223" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481478/preview.jpg" alt="326FCT-223">
-                    </a>
-                </td>
-                <td>Prestige 강한 반응</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td class="code">MFCS-211</td>
-                <td>Saya</td>
-                <td>01:13:34</td>
-                <td>
-                    <a href="https://123av.com/en/v/mfcs-211" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481467/preview.jpg" alt="MFCS-211">
-                    </a>
-                </td>
-                <td>Saya 출연</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td class="code">300MIUM-1369</td>
-                <td>Academic Affair – 치과 조수</td>
-                <td>01:22:24</td>
-                <td>
-                    <a href="https://123av.com/en/v/300mium-1369" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481452/preview.jpg" alt="300MIUM-1369">
-                    </a>
-                </td>
-                <td>치과 조수 불륜</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td class="code">TSDS-42233</td>
-                <td>Le Verseau Hiroko Sato</td>
-                <td>01:30:18</td>
-                <td>
-                    <a href="https://123av.com/en/v/tsds-42233" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481442/preview.jpg" alt="TSDS-42233">
-                    </a>
-                </td>
-                <td>Hiroko Sato</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td class="code">SIRO-5686</td>
-                <td>Gyaru女孩의 성욕 조사</td>
-                <td>01:05:09</td>
-                <td>
-                    <a href="https://123av.com/en/v/siro-5686" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481414/preview.jpg" alt="SIRO-5686">
-                    </a>
-                </td>
-                <td>masochistic gyaru</td>
-            </tr>
-            <tr>
-                <td>8</td>
-                <td class="code">PRIAN-052B</td>
-                <td>Secret Base / Aki Sasaki</td>
-                <td>01:29:12</td>
-                <td>
-                    <a href="https://123av.com/en/v/prian-052b" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481410/preview.jpg" alt="PRIAN-052B">
-                    </a>
-                </td>
-                <td>Aki Sasaki Blu-ray</td>
-            </tr>
-            <tr>
-                <td>9</td>
-                <td class="code">MBDD-2177B</td>
-                <td>Unpai's Teachings / Unpai</td>
-                <td>01:39:14</td>
-                <td>
-                    <a href="https://123av.com/en/v/mbdd-2177b" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481404/preview.jpg" alt="MBDD-2177B">
-                    </a>
-                </td>
-                <td>Unpai Blu-ray</td>
-            </tr>
-            <tr>
-                <td>10</td>
-                <td class="code">MREC-005</td>
-                <td>Sex Record #005 / Meguri</td>
-                <td>01:26:34</td>
-                <td>
-                    <a href="https://123av.com/en/v/mrec-005" target="_blank">
-                        <img class="cover-img" src="https://m0.v.123av.com/contents/videos_screenshots/481000/481400/preview.jpg" alt="MREC-005">
-                    </a>
-                </td>
-                <td>Meguri 인생 기록</td>
+                <td colspan="6" class="loading">🔄 실시간 최신 데이터를 긁어오는 중입니다... 잠시만 기다려주세요.</td>
             </tr>
         </tbody>
     </table>
 
     <p class="note">
         🔞 19금 콘텐츠<br>
-        • <strong>이미지를 클릭</strong>하면 해당 작품의 상세 페이지로 이동합니다.<br>
-        • 우회 태그(<code style="color:#ff4081;">no-referrer</code>)를 통해 이미지를 직접 불러오도록 수정되었습니다.
+        • 이 페이지는 별도의 서버 업데이트 없이, 접속할 때마다 원본 사이트의 최신 정보를 실시간으로 파싱합니다.
     </p>
+
+    <script>
+        // 크롤링 타겟 URL 및 CORS 우회 프록시 서버 설정
+        const targetUrl = 'https://123av.com/en/v/recent';
+        const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(targetUrl);
+
+        async function fetchRecentData() {
+            try {
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error('네트워크 반응 실패');
+                
+                const data = await response.json();
+                
+                // 받아온 HTML 문자열을 가상 DOM으로 변환하여 탐색
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.contents, 'text/html');
+                
+                // ⚠️ 타겟 사이트의 리스트 아이템 클래스 추출 (123av 구조 기준 예시)
+                // 실제 사이트의 구조가 바뀌면 셀렉터(.item 등)를 변경해야 합니다.
+                const items = doc.querySelectorAll('.video-list-item, .item, .post'); 
+                const tbody = document.getElementById('content-list');
+                
+                if (items.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:20px; color:#ff4081;">데이터를 파싱하지 못했습니다. (사이트 구조 변경 가능성)</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = ''; // 로딩 문구 제거
+                
+                // 최대 10개만 가공하여 테이블에 추가
+                const limit = Math.min(items.length, 10);
+                for (let i = 0; i < limit; i++) {
+                    const item = items[i];
+                    
+                    // 각 사이트 구조에 맞게 텍스트 및 속성 추출 (방어코드 포함)
+                    const title = item.querySelector('.title, .video-title, a')?.innerText.strip() || '제목 없음';
+                    const code = item.querySelector('.code, .id')?.innerText.strip() || '품번 미정';
+                    const duration = item.querySelector('.duration, .time')?.innerText.strip() || '--:--';
+                    
+                    let link = item.querySelector('a')?.getAttribute('href') || '#';
+                    if (!link.startsWith('http')) link = 'https://123av.com' + link;
+                    
+                    // 이미지 주소 파싱 (lazy loading 대응)
+                    let imgItem = item.querySelector('img');
+                    let imgSrc = imgItem?.getAttribute('data-src') || imgItem?.getAttribute('data-original') || imgItem?.getAttribute('src') || '';
+                    if (imgSrc && !imgSrc.startsWith('http')) imgSrc = 'https:' + imgSrc;
+
+                    // HTML 행 동적 생성
+                    const row = `
+                        <tr>
+                            <td>${i + 1}</td>
+                            <td class="code">${code}</td>
+                            <td>${title}</td>
+                            <td>${duration}</td>
+                            <td>
+                                <a href="${link}" target="_blank">
+                                    <div class="img-container">
+                                        📸 ${code}<br>표지 보기
+                                        <img class="cover-img" src="${imgSrc}" alt="" onerror="this.style.display='none';">
+                                    </div>
+                                </a>
+                            </td>
+                            <td>${title.substring(0, 15)}... 관련 최신 영상</td>
+                        </tr>
+                    `;
+                    tbody.innerHTML += row;
+                }
+            } catch (error) {
+                console.error('크롤링 에러:', error);
+                document.getElementById('content-list').innerHTML = `
+                    <tr><td colspan="6" style="text-align:center; padding:20px; color:red;">❌ 데이터를 불러오는 중 에러가 발생했습니다. 잠시 후 새로고침 해주세요.</td></tr>
+                `;
+            }
+        }
+
+        // 페이지 로드 시 크롤링 함수 실행
+        window.addEventListener('DOMContentLoaded', fetchRecentData);
+    </script>
 </body>
 </html>
