@@ -10,14 +10,14 @@
         h1 { text-align: center; color: #ff4081; font-size: 2.4em; margin-bottom: 5px; }
         .subtitle { text-align: center; color: #aaa; margin-bottom: 30px; }
         table { width: 100%; max-width: 1450px; margin: 0 auto; border-collapse: collapse; background: #1e1e1e; box-shadow: 0 4px 25px rgba(0,0,0,0.7); }
-        th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #333; vertical-align: middle; }
+        th, td { padding: 15px 12px; text-align: left; border-bottom: 1px solid #333; vertical-align: middle; }
         th { background: #2a2a2a; color: #ff4081; }
         
-        /* 로딩 애니메이션 */
         .loading { text-align: center; font-size: 1.2em; color: #ff4081; padding: 40px; }
         
+        /* 표지 박스 */
         .img-container {
-            position: relative; width: 140px; height: 190px; background: #222; 
+            position: relative; width: 130px; height: 180px; background: #222; 
             border-radius: 6px; border: 1px solid #444; overflow: hidden; 
             display: flex; align-items: center; justify-content: center; 
             text-align: center; font-size: 11px; color: #777; transition: all 0.3s;
@@ -26,40 +26,50 @@
         .cover-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; background: #222; }
         
         tr:hover { background: #2f2f2f; }
-        .code { font-weight: bold; color: #4fc3f7; }
+        .code { font-weight: bold; color: #4fc3f7; white-space: nowrap; }
+        
+        /* 🔥 주요 내용 칸에 들어갈 태그 뱃지 스타일 */
+        .tag-container { display: flex; flex-wrap: wrap; gap: 6px; max-width: 450px; }
+        .tag-badge { 
+            background: #2a2a2a; color: #ccc; padding: 4px 8px; 
+            border-radius: 4px; font-size: 11px; border: 1px solid #444; 
+            white-space: nowrap;
+        }
+        .tag-badge.actress { background: #3d1223; color: #ff79c6; border-color: #ff4081; } /* 배우 이름은 특별한 색상 */
+        .tag-badge.hd { background: #123d30; color: #50fa7b; border-color: #28a745; }    /* 화질/특성 정보 */
+
         .note { text-align: center; color: #888; margin-top: 40px; }
     </style>
 </head>
 <body>
 
     <h1>🔥 최근 업데이트 Top 10</h1>
-    <p class="subtitle">123AV 실시간 크롤링 데이터</p>
+    <p class="subtitle">123AV 실시간 크롤링 데이터 (태그 수집 강화)</p>
     
     <table>
         <thead>
             <tr>
-                <th>순위</th>
-                <th>코드</th>
+                <th style="width: 50px;">순위</th>
+                <th style="width: 120px;">코드</th>
                 <th>제목</th>
-                <th>러닝타임</th>
-                <th>표지</th>
-                <th>주요 내용</th>
+                <th style="width: 90px;">러닝타임</th>
+                <th style="width: 150px;">표지</th>
+                <th style="width: 450px;">주요 내용 (태그)</th>
             </tr>
         </thead>
         <tbody id="content-list">
             <tr>
-                <td colspan="6" class="loading">🔄 실시간 최신 데이터를 긁어오는 중입니다... 잠시만 기다려주세요.</td>
+                <td colspan="6" class="loading">🔄 실시간 최신 데이터 및 상세 태그를 수집하는 중입니다...</td>
             </tr>
         </tbody>
     </table>
 
     <p class="note">
         🔞 19금 콘텐츠<br>
-        • 이 페이지는 별도의 서버 업데이트 없이, 접속할 때마다 원본 사이트의 최신 정보를 실시간으로 파싱합니다.
+        • 장르, 여배우, 화질 등의 상세 데이터가 포함된 실제 태그 정보를 실시간으로 파싱하여 표시합니다.
     </p>
 
     <script>
-        // 크롤링 타겟 URL 및 CORS 우회 프록시 서버 설정
         const targetUrl = 'https://123av.com/en/v/recent';
         const proxyUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(targetUrl);
 
@@ -69,14 +79,11 @@
                 if (!response.ok) throw new Error('네트워크 반응 실패');
                 
                 const data = await response.json();
-                
-                // 받아온 HTML 문자열을 가상 DOM으로 변환하여 탐색
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(data.contents, 'text/html');
                 
-                // ⚠️ 타겟 사이트의 리스트 아이템 클래스 추출 (123av 구조 기준 예시)
-                // 실제 사이트의 구조가 바뀌면 셀렉터(.item 등)를 변경해야 합니다.
-                const items = doc.querySelectorAll('.video-list-item, .item, .post'); 
+                // 원본 사이트 리스트 아이템 추출
+                const items = doc.querySelectorAll('.video-list-item, .item, .post, [class*="video-item"]'); 
                 const tbody = document.getElementById('content-list');
                 
                 if (items.length === 0) {
@@ -84,56 +91,33 @@
                     return;
                 }
 
-                tbody.innerHTML = ''; // 로딩 문구 제거
+                tbody.innerHTML = ''; 
                 
-                // 최대 10개만 가공하여 테이블에 추가
                 const limit = Math.min(items.length, 10);
                 for (let i = 0; i < limit; i++) {
                     const item = items[i];
                     
-                    // 각 사이트 구조에 맞게 텍스트 및 속성 추출 (방어코드 포함)
-                    const title = item.querySelector('.title, .video-title, a')?.innerText.strip() || '제목 없음';
-                    const code = item.querySelector('.code, .id')?.innerText.strip() || '품번 미정';
-                    const duration = item.querySelector('.duration, .time')?.innerText.strip() || '--:--';
+                    // 기본 정보 추출
+                    const title = item.querySelector('.title, .video-title, a[title]')?.getAttribute('title') || item.querySelector('.title, .video-title')?.innerText?.trim() || '제목 없음';
+                    const code = item.querySelector('.code, .id, .metadata-code')?.innerText?.trim() || '품번 미정';
+                    const duration = item.querySelector('.duration, .time, .video-duration')?.innerText?.trim() || '--:--';
                     
                     let link = item.querySelector('a')?.getAttribute('href') || '#';
                     if (!link.startsWith('http')) link = 'https://123av.com' + link;
                     
-                    // 이미지 주소 파싱 (lazy loading 대응)
                     let imgItem = item.querySelector('img');
                     let imgSrc = imgItem?.getAttribute('data-src') || imgItem?.getAttribute('data-original') || imgItem?.getAttribute('src') || '';
                     if (imgSrc && !imgSrc.startsWith('http')) imgSrc = 'https:' + imgSrc;
 
-                    // HTML 행 동적 생성
-                    const row = `
-                        <tr>
-                            <td>${i + 1}</td>
-                            <td class="code">${code}</td>
-                            <td>${title}</td>
-                            <td>${duration}</td>
-                            <td>
-                                <a href="${link}" target="_blank">
-                                    <div class="img-container">
-                                        📸 ${code}<br>표지 보기
-                                        <img class="cover-img" src="${imgSrc}" alt="" onerror="this.style.display='none';">
-                                    </div>
-                                </a>
-                            </td>
-                            <td>${title.substring(0, 15)}... 관련 최신 영상</td>
-                        </tr>
-                    `;
-                    tbody.innerHTML += row;
-                }
-            } catch (error) {
-                console.error('크롤링 에러:', error);
-                document.getElementById('content-list').innerHTML = `
-                    <tr><td colspan="6" style="text-align:center; padding:20px; color:red;">❌ 데이터를 불러오는 중 에러가 발생했습니다. 잠시 후 새로고침 해주세요.</td></tr>
-                `;
-            }
-        }
-
-        // 페이지 로드 시 크롤링 함수 실행
-        window.addEventListener('DOMContentLoaded', fetchRecentData);
-    </script>
-</body>
-</html>
+                    // 🔥 [핵심 업데이트] 상세 정보(태그/장르/배우) 추출 로직
+                    // 보통 각 아이템 내부에 소형 태그나 카테고리 링커(.tag, .genres, a[href*="/tag/"])들이 존재합니다.
+                    const rawTags = item.querySelectorAll('.tags a, .genres a, .metadata a, a[href*="/tag/"], a[href*="/model/"]');
+                    let tagHtml = '<div class="tag-container">';
+                    
+                    if (rawTags.length > 0) {
+                        rawTags.forEach(tag => {
+                            const tagText = tag.innerText.trim();
+                            if (tagText) {
+                                // 링크 주소에 model이 포함되어 있거나 특정 패턴인 경우 배우 뱃지 클래스 부여
+                                const isActress = tag.getAttribute('href')?.includes('model') || tag.getAttribute('href')?.includes('star');
+                                const isHD = tagText.toLowerCase().includes('hd') || tagText.toLowerCase().includes('
